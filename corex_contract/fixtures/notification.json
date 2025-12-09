@@ -1,38 +1,84 @@
 [
-  {
-    "doctype": "Notification",
-    "name": "Contract - Party Signature Required",
-    "enabled": 1,
-    "channel": "Email",
-    "subject": "Action Required: Sign Contract {{ doc.name }}",
-    "document_type": "Contract",
-    "event": "Value Change",
-    "value_changed": "workflow_state",
-    "condition": "doc.workflow_state == 'Pending Party Signature'",
-    "message": "Dear {{ doc.party_name }},<br><br>Please sign the contract by clicking: {{ frappe.utils.get_url() }}/sign-contract/{{ doc.name }}/edit<br><br>Contract Details:<br>- Number: {{ doc.name }}<br>{% if doc.start_date %}- Start Date: {{ doc.start_date }}<br>{% endif %}{% if doc.end_date %}- End Date: {{ doc.end_date }}<br>{% endif %}<br>Thank you.",
-    "recipients": [
-      {
-        "doctype": "Notification Recipient",
-        "receiver_by_document_field": "party_user"
-      }
-    ]
-  },
-  {
-    "doctype": "Notification",
-    "name": "Contract - Party Signed",
-    "enabled": 1,
-    "channel": "Email",
-    "subject": "Contract {{ doc.name }} - Party Signature Received",
-    "document_type": "Contract",
-    "event": "Value Change",
-    "value_changed": "workflow_state",
-    "condition": "doc.workflow_state == 'Signed by Party'",
-    "message": "Contract {{ doc.name }} has been signed by {{ doc.party_name }}. Please review and approve.\n\nView contract: {{ frappe.utils.get_url() }}/app/contract/{{ doc.name }}",
-    "recipients": [
-      {
-        "doctype": "Notification Recipient",
-        "receiver_by_role": "HR Manager"
-      }
-    ]
-  }
+ {
+  "attach_print": 0,
+  "channel": "Email",
+  "condition": "doc.workflow_state == 'Pending Party Signature'",
+  "date_changed": null,
+  "days_in_advance": 0,
+  "docstatus": 0,
+  "doctype": "Notification",
+  "document_type": "Contract",
+  "enabled": 1,
+  "event": "Value Change",
+  "is_standard": 0,
+  "message": "Dear {{ doc.party_name }},<br><br>Please sign the contract by clicking: {{ frappe.utils.get_url() }}/sign-contract/{{ doc.name }}/edit<br><br>Contract Details:<br>- Number: {{ doc.name }}<br>{% if doc.start_date %}- Start Date: {{ doc.start_date }}<br>{% endif %}{% if doc.end_date %}- End Date: {{ doc.end_date }}<br>{% endif %}<br>Thank you.",
+  "message_type": null,
+  "method": null,
+  "modified": "2025-12-09 19:51:22.573806",
+  "module": null,
+  "name": "Contract - Party Signature Required",
+  "print_format": null,
+  "property_value": null,
+  "recipients": [
+   {
+    "bcc": null,
+    "cc": null,
+    "condition": null,
+    "parent": "Contract - Party Signature Required",
+    "parentfield": "recipients",
+    "parenttype": "Notification",
+    "receiver_by_document_field": "party_user",
+    "receiver_by_role": null
+   }
+  ],
+  "send_system_notification": 0,
+  "send_to_all_assignees": 0,
+  "sender": null,
+  "sender_email": null,
+  "set_property_after_alert": null,
+  "slack_webhook_url": null,
+  "subject": "Action Required: Sign Contract {{ doc.name }}",
+  "value_changed": "workflow_state"
+ },
+ {
+  "attach_print": 0,
+  "channel": "Email",
+  "condition": "doc.workflow_state == 'Signed by Party'",
+  "date_changed": null,
+  "days_in_advance": 0,
+  "docstatus": 0,
+  "doctype": "Notification",
+  "document_type": "Contract",
+  "enabled": 1,
+  "event": "Value Change",
+  "is_standard": 0,
+  "message": "Contract {{ doc.name }} has been signed by {{ doc.party_name }}. Please review and approve.\n\nView contract: {{ frappe.utils.get_url() }}/app/contract/{{ doc.name }}",
+  "message_type": null,
+  "method": null,
+  "modified": "2025-12-09 19:51:22.595144",
+  "module": null,
+  "name": "Contract - Party Signed",
+  "print_format": null,
+  "property_value": null,
+  "recipients": [
+   {
+    "bcc": null,
+    "cc": null,
+    "condition": null,
+    "parent": "Contract - Party Signed",
+    "parentfield": "recipients",
+    "parenttype": "Notification",
+    "receiver_by_document_field": null,
+    "receiver_by_role": "HR Manager"
+   }
+  ],
+  "send_system_notification": 0,
+  "send_to_all_assignees": 0,
+  "sender": null,
+  "sender_email": null,
+  "set_property_after_alert": null,
+  "slack_webhook_url": null,
+  "subject": "Contract {{ doc.name }} - Party Signature Received",
+  "value_changed": "workflow_state"
+ }
 ]

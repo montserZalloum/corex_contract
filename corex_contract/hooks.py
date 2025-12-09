@@ -49,7 +49,14 @@ fixtures = [
 				"Contract - Party Signed"
 			]]
 		]
-	}
+	},
+	{
+        "dt": "Custom DocPerm",
+        "filters": [
+            ["parent", "=", "Contract"],
+            ["role", "=", "Customer"]
+        ]
+    }
 ]
 
 # Apps
