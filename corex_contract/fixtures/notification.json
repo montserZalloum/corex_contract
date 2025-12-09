@@ -1,0 +1,38 @@
+[
+  {
+    "doctype": "Notification",
+    "name": "Contract - Party Signature Required",
+    "enabled": 1,
+    "channel": "Email",
+    "subject": "Action Required: Sign Contract {{ doc.name }}",
+    "document_type": "Contract",
+    "event": "Value Change",
+    "value_changed": "workflow_state",
+    "condition": "doc.workflow_state == 'Pending Party Signature'",
+    "message": "Dear {{ doc.party_name }},<br><br>Please sign the contract by clicking: {{ frappe.utils.get_url() }}/sign-contract/{{ doc.name }}/edit<br><br>Contract Details:<br>- Number: {{ doc.name }}<br>- Start Date: {{ doc.start_date }}<br>- End Date: {{ doc.end_date }}<br><br>Thank you.",
+    "recipients": [
+      {
+        "doctype": "Notification Recipient",
+        "receiver_by_document_field": "party_user"
+      }
+    ]
+  },
+  {
+    "doctype": "Notification",
+    "name": "Contract - Party Signed",
+    "enabled": 1,
+    "channel": "Email",
+    "subject": "Contract {{ doc.name }} - Party Signature Received",
+    "document_type": "Contract",
+    "event": "Value Change",
+    "value_changed": "workflow_state",
+    "condition": "doc.workflow_state == 'Signed by Party'",
+    "message": "Contract {{ doc.name }} has been signed by {{ doc.party_name }}. Please review and approve.\n\nView contract: {{ frappe.utils.get_url() }}/app/contract/{{ doc.name }}",
+    "recipients": [
+      {
+        "doctype": "Notification Recipient",
+        "receiver_by_role": "HR Manager"
+      }
+    ]
+  }
+]

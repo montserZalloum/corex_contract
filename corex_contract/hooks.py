@@ -5,6 +5,53 @@ app_description = "Seconda Party Contract"
 app_email = "dev@corex.com"
 app_license = "mit"
 
+# Fixtures
+# --------
+# Export fixtures to JSON files for version control
+fixtures = [
+	{
+		"dt": "Custom Field",
+		"filters": [
+			["name", "in", [
+				"Contract-party_signature",
+				"Contract-party_signed_on"
+			]]
+		]
+	},
+	{
+		"dt": "Workflow State",
+		"filters": [
+			["workflow_state_name", "in", [
+				"Draft",
+				"Pending Party Signature",
+				"Signed by Party",
+				"Active"
+			]]
+		]
+	},
+	{
+		"dt": "Workflow",
+		"filters": [
+			["workflow_name", "=", "Contract Two-Party Signature"]
+		]
+	},
+	{
+		"dt": "Web Form",
+		"filters": [
+			["name", "=", "sign-contract"]
+		]
+	},
+	{
+		"dt": "Notification",
+		"filters": [
+			["name", "in", [
+				"Contract - Party Signature Required",
+				"Contract - Party Signed"
+			]]
+		]
+	}
+]
+
 # Apps
 # ------------------
 
@@ -43,7 +90,7 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {"Contract": "public/js/contract.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -137,13 +184,12 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Contract": {
+		"validate": "corex_contract.contract_hooks.validate_contract",
+		"on_update": "corex_contract.contract_hooks.on_contract_update"
+	}
+}
 
 # Scheduled Tasks
 # ---------------

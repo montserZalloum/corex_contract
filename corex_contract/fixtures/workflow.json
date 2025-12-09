@@ -1,0 +1,84 @@
+[
+  {
+    "doctype": "Workflow",
+    "workflow_name": "Contract Two-Party Signature",
+    "document_type": "Contract",
+    "is_active": 1,
+    "override_status": 0,
+    "send_email_alert": 1,
+    "workflow_state_field": "workflow_state",
+    "states": [
+      {
+        "doctype": "Workflow Document State",
+        "state": "Draft",
+        "doc_status": "0",
+        "allow_edit": "HR Manager",
+        "is_optional_state": 0,
+        "message": "Contract is in draft state. HR can edit and send for party signature."
+      },
+      {
+        "doctype": "Workflow Document State",
+        "state": "Pending Party Signature",
+        "doc_status": "0",
+        "allow_edit": "Customer",
+        "is_optional_state": 0,
+        "message": "Awaiting signature from party. Party can sign via web form."
+      },
+      {
+        "doctype": "Workflow Document State",
+        "state": "Signed by Party",
+        "doc_status": "0",
+        "allow_edit": "HR Manager",
+        "is_optional_state": 0,
+        "message": "Party has signed. HR Manager can review and approve/submit."
+      },
+      {
+        "doctype": "Workflow Document State",
+        "state": "Active",
+        "doc_status": "1",
+        "allow_edit": "HR Manager",
+        "update_field": "status",
+        "update_value": "Active",
+        "is_optional_state": 0,
+        "message": "Contract is active and submitted."
+      }
+    ],
+    "transitions": [
+      {
+        "doctype": "Workflow Transition",
+        "state": "Draft",
+        "action": "Send for Signature",
+        "next_state": "Pending Party Signature",
+        "allowed": "HR Manager",
+        "allow_self_approval": 1,
+        "condition": "doc.party_user"
+      },
+      {
+        "doctype": "Workflow Transition",
+        "state": "Pending Party Signature",
+        "action": "Sign Contract",
+        "next_state": "Signed by Party",
+        "allowed": "Customer",
+        "allow_self_approval": 1,
+        "condition": "doc.party_signature"
+      },
+      {
+        "doctype": "Workflow Transition",
+        "state": "Signed by Party",
+        "action": "Approve and Submit",
+        "next_state": "Active",
+        "allowed": "HR Manager",
+        "allow_self_approval": 0,
+        "condition": "doc.party_signature and doc.signee_company"
+      },
+      {
+        "doctype": "Workflow Transition",
+        "state": "Signed by Party",
+        "action": "Reject",
+        "next_state": "Draft",
+        "allowed": "HR Manager",
+        "allow_self_approval": 1
+      }
+    ]
+  }
+]
