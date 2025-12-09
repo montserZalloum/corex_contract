@@ -1,6 +1,7 @@
 [
   {
     "doctype": "Workflow",
+    "name": "Contract Two-Party Signature",
     "workflow_name": "Contract Two-Party Signature",
     "document_type": "Contract",
     "is_active": 1,
@@ -59,8 +60,7 @@
         "action": "Sign Contract",
         "next_state": "Signed by Party",
         "allowed": "Customer",
-        "allow_self_approval": 1,
-        "condition": "doc.party_signature"
+        "allow_self_approval": 1
       },
       {
         "doctype": "Workflow Transition",

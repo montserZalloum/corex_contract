@@ -1,16 +1,29 @@
 import frappe
 from frappe.utils import now_datetime
 
-def on_contract_update(doc, method):
-	"""Auto-update party_signed_on timestamp when signature is added"""
-	if doc.party_signature and not doc.party_signed_on:
-		doc.db_set('party_signed_on', now_datetime(), update_modified=False)
+# --- THIS IS THE CORRECT, DOCUMENTED IMPORT PATH ---
+from frappe.model.workflow import apply_workflow
 
-def validate_contract(doc, method):
-	"""Validate and auto-transition workflow when party signs"""
-	# Check if this is a signature being added via webform
-	if doc.party_signature and doc.workflow_state == "Pending Party Signature":
-		# Check if this is the first time the signature is being added
-		if doc.has_value_changed('party_signature'):
-			# Update workflow state to trigger notification
-			doc.workflow_state = 'Signed by Party'
+def on_contract_update(doc, method):
+	"""
+	After a contract is saved, check if the party signature was just added.
+	If so, set the timestamp and apply the workflow to change the state.
+	"""
+	# get_doc_before_save() is also available in on_update
+	doc_before_save = doc.get_doc_before_save()
+	if not doc_before_save:
+		return
+
+	# Proceed only if the state is 'Pending Party Signature'
+	if doc.workflow_state == "Pending Party Signature":
+
+		# Check if the signature was added in the save operation that just finished
+		if doc.party_signature and not doc_before_save.party_signature:
+
+			# 1. Set the timestamp directly in the database.
+			# Use db_set in post-save hooks to avoid triggering another save cycle.
+			doc.db_set('party_signed_on', now_datetime(), update_modified=False)
+
+			# 2. Apply the workflow action. This will trigger its own save.
+			apply_workflow(doc, "Sign Contract")
+			

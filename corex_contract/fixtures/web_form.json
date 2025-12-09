@@ -1,6 +1,7 @@
 [
   {
     "doctype": "Web Form",
+    "name": "sign-contract",
     "title": "Sign Contract",
     "route": "sign-contract",
     "doc_type": "Contract",

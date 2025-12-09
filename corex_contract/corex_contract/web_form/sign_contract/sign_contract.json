@@ -8,7 +8,6 @@
  "anonymous": 0,
  "apply_document_permissions": 1,
  "button_label": "Submit Signature",
- "client_script": "frappe.web_form.on('party_signature', function(field, value) {\n    if (value) {\n        frappe.web_form.set_value('party_signed_on', frappe.datetime.now_datetime());\n    }\n});",
  "condition_json": "[[\"Contract\",\"workflow_state\",\"=\",\"Pending Party Signature\",false]]",
  "creation": "2025-12-08 20:35:32.264856",
  "doc_type": "Contract",

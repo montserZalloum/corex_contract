@@ -26,5 +26,7 @@ frappe.ui.form.on('Contract', {
 				});
 			});
 		}
+
+		
 	}
 });

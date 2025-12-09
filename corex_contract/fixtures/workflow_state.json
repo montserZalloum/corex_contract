@@ -1,24 +1,28 @@
 [
   {
     "doctype": "Workflow State",
+    "name": "Draft",
     "workflow_state_name": "Draft",
     "style": "Primary",
     "icon": "file"
   },
   {
     "doctype": "Workflow State",
+    "name": "Pending Party Signature",
     "workflow_state_name": "Pending Party Signature",
     "style": "Warning",
     "icon": "edit"
   },
   {
     "doctype": "Workflow State",
+    "name": "Signed by Party",
     "workflow_state_name": "Signed by Party",
     "style": "Info",
     "icon": "check"
   },
   {
     "doctype": "Workflow State",
+    "name": "Active",
     "workflow_state_name": "Active",
     "style": "Success",
     "icon": "ok"

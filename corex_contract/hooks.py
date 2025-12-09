@@ -186,7 +186,6 @@ doctype_js = {"Contract": "public/js/contract.js"}
 
 doc_events = {
 	"Contract": {
-		"validate": "corex_contract.contract_hooks.validate_contract",
 		"on_update": "corex_contract.contract_hooks.on_contract_update"
 	}
 }
