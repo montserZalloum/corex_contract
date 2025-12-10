@@ -46,7 +46,10 @@ fixtures = [
 		"filters": [
 			["name", "in", [
 				"Contract - Party Signature Required",
-				"Contract - Party Signed"
+				"Contract - Party Signed",
+				"Contract - Expiry Reminder (30 Days)",
+				"Contract - Expiry Reminder (15 Days)",
+				"Contract - Expiry Reminder (2 Days)"
 			]]
 		]
 	},
