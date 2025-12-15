@@ -79,3 +79,85 @@ def send_signature_notification(doc):
 		notification_log.insert(ignore_permissions=True)
 	
 	frappe.db.commit()
+
+
+# --- REPLACE the verbose debug version with this FINAL, CLEAN version ---
+from frappe.utils import nowdate, add_days, date_diff
+
+def send_contract_expiry_reminders():
+    """
+    This function is run by the daily scheduler.
+    It finds contracts expiring in 30, 15, or 2 days and sends
+    both email and system notifications to HR Managers and the document owner.
+    """
+    today = nowdate()
+    reminder_days = [30, 15, 2]
+    target_dates = [add_days(today, days) for days in reminder_days]
+
+    contracts_to_notify = frappe.get_all(
+        "Contract",
+        filters={
+            "status": "Active",
+            "docstatus": 1,
+            "end_date": ["in", target_dates]
+        },
+        fields=["name", "owner", "party_name", "end_date"]
+    )
+
+    if not contracts_to_notify:
+        return # Exit quietly if there are no contracts to process
+
+    hr_managers = [
+        p[0] for p in frappe.db.sql("""
+            SELECT `parent` FROM `tabHas Role`
+            WHERE `role`='HR Manager' AND `parenttype`='User'
+            AND `parent` IN (SELECT `name` FROM `tabUser` WHERE `enabled`=1)
+        """)
+    ]
+
+    for contract_data in contracts_to_notify:
+        days_to_expiry = date_diff(contract_data.end_date, today)
+        
+        recipients = set(hr_managers)
+        recipients.add(contract_data.owner)
+        
+        if not recipients:
+            continue
+
+        valid_recipients = [user for user in recipients if frappe.db.get_value("User", user, "enabled")]
+        
+        if not valid_recipients:
+            continue
+            
+        # --- 1. Send Email ---
+        email_subject = f"Contract {contract_data.name} Expires in {days_to_expiry} Days - Action Required"
+        email_message = f"""
+            Dear Team,<br><br>
+            This is a reminder that the contract <strong>{contract_data.name}</strong> with <i>{contract_data.party_name}</i> will expire in <b>{days_to_expiry} days</b> on {contract_data.end_date}.<br><br>
+            Please review this contract and take the necessary action.<br><br>
+            <a href="{frappe.utils.get_url_to_form('Contract', contract_data.name)}">Click here to view the contract</a>.
+        """
+        frappe.sendmail(
+            recipients=valid_recipients,
+            subject=email_subject,
+            message=email_message,
+            reference_doctype="Contract",
+            reference_name=contract_data.name
+        )
+
+        # --- 2. Create System Notification ---
+        notification_subject = f"Contract {contract_data.name} expires in {days_to_expiry} days"
+        notification_message = f"The contract with {contract_data.party_name} is expiring soon. Please review."
+        
+        for user in valid_recipients:
+            frappe.get_doc({
+                "doctype": "Notification Log",
+                "for_user": user,
+                "document_type": "Contract",
+                "document_name": contract_data.name,
+                "subject": notification_subject,
+                "email_content": notification_message,
+                "type": "Alert"
+            }).insert(ignore_permissions=True)
+
+    frappe.db.commit()

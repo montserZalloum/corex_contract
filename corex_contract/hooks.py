@@ -49,10 +49,7 @@ fixtures = [
 		"filters": [
 			["name", "in", [
 				"Contract - Party Signature Required",
-				"Contract - Party Signed",
-				"Contract - Expiry Reminder (30 Days)",
-				"Contract - Expiry Reminder (15 Days)",
-				"Contract - Expiry Reminder (2 Days)"
+				"Contract - Party Signed"
 			]]
 		]
 	},
@@ -205,7 +202,11 @@ doc_events = {
 
 # Scheduled Tasks
 # ---------------
-
+scheduler_events = {
+    "daily": [
+        "corex_contract.contract_hooks.send_contract_expiry_reminders"
+    ]
+}
 # scheduler_events = {
 # 	"all": [
 # 		"corex_contract.tasks.all"
