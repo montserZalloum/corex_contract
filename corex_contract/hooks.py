@@ -5,6 +5,9 @@ app_description = "Seconda Party Contract"
 app_email = "dev@corex.com"
 app_license = "mit"
 
+
+on_install = "corex_contract.install_workflow.install_workflow"
+
 # Fixtures
 # --------
 # Export fixtures to JSON files for version control

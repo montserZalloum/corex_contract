@@ -294,8 +294,8 @@ def create_notifications():
 
 def install_workflow():
 	"""Main installation function"""
-	frappe.init(site="x.conanacademy.com")
-	frappe.connect()
+	# frappe.init(site="x.conanacademy.com")
+	# frappe.connect()
 
 	print("\n=== Installing Contract Two-Party Signature Workflow ===\n")
 
@@ -320,5 +320,5 @@ def install_workflow():
 	frappe.db.commit()
 	print("\n=== Installation Complete! ===\n")
 
-if __name__ == "__main__":
-	install_workflow()
+# if __name__ == "__main__":
+# 	install_workflow()
