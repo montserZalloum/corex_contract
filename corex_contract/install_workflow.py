@@ -244,53 +244,54 @@ def create_web_form():
 	web_form.insert()
 	print(f"Created Web Form: {web_form_name}")
 
-def create_notifications():
-	"""Create email notifications"""
-	notifications = [
-		{
-			"name": "Contract - Party Signature Required",
-			"enabled": 1,
-			"channel": "Email",
-			"subject": "Action Required: Sign Contract {{ doc.name }}",
-			"document_type": "Contract",
-			"event": "Value Change",
-			"value_changed": "workflow_state",
-			"condition": "doc.workflow_state == 'Pending Party Signature'",
-			"message": "Dear {{ doc.party_name }},\n\nPlease sign the contract by clicking: {{ frappe.utils.get_url() }}/sign-contract?name={{ doc.name }}\n\nContract Details:\n- Number: {{ doc.name }}\n- Start Date: {{ doc.start_date }}\n- End Date: {{ doc.end_date }}\n\nThank you.",
-			"recipients": [
-				{
-					"receiver_by_document_field": "party_user"
-				}
-			]
-		},
-		{
-			"name": "Contract - Party Signed",
-			"enabled": 1,
-			"channel": "Email",
-			"subject": "Contract {{ doc.name }} - Party Signature Received",
-			"document_type": "Contract",
-			"event": "Value Change",
-			"value_changed": "workflow_state",
-			"condition": "doc.workflow_state == 'Signed by Party'",
-			"message": "Contract {{ doc.name }} has been signed by {{ doc.party_name }}. Please review and approve.\n\nView contract: {{ frappe.utils.get_url() }}/app/contract/{{ doc.name }}",
-			"recipients": [
-				{
-					"receiver_by_role": "HR Manager"
-				}
-			]
-		}
-	]
+# def create_notifications():
+# 	"""Create email notifications"""
+# 	notifications = [
+# 		{
+# 			"name": "Contract - Party Signature Required",
+# 			"enabled": 1,
+# 			"channel": "Email",
+# 			"subject": frappe._("Action Required: Sign Contract {{ doc.name }}"), # TRANSLATE
+# 			"document_type": "Contract",
+# 			"event": "Value Change",
+# 			"value_changed": "workflow_state",
+# 			"condition": "doc.workflow_state == 'Pending Party Signature'",
+# 			"message": frappe._("Dear {{ doc.party_name }},\n\nPlease sign the contract by clicking: {{ frappe.utils.get_url() }}/sign-contract?name={{ doc.name }}\n\nContract Details:\n- Number: {{ doc.name }}\n- Start Date: {{ doc.start_date }}\n- End Date: {{ doc.end_date }}\n\nThank you."), # TRANSLATE
+# 			"recipients": [
+# 				{
+# 					"receiver_by_document_field": "party_user"
+# 				}
+# 			]
+# 		},
+# 		{
+# 			"name": "Contract - Party Signed",
+# 			"enabled": 1,
+# 			"channel": "Email",
+# 			"subject": frappe._("Contract {{ doc.name }} - Party Signature Received"), # TRANSLATE
+# 			"document_type": "Contract",
+# 			"event": "Value Change",
+# 			"value_changed": "workflow_state",
+# 			"condition": "doc.workflow_state == 'Signed by Party'",
+# 			"message": frappe._("Contract {{ doc.name }} has been signed by {{ doc.party_name }}. Please review and approve.\n\nView contract: {{ frappe.utils.get_url() }}/app/contract/{{ doc.name }}"), # TRANSLATE
+# 			"recipients": [
+# 				{
+# 					"receiver_by_role": "HR Manager"
+# 				}
+# 			]
+# 		}
+# 	]
 
-	for notif in notifications:
-		if not frappe.db.exists("Notification", notif["name"]):
-			notification = frappe.get_doc({
-				"doctype": "Notification",
-				**notif
-			})
-			notification.insert()
-			print(f"Created Notification: {notif['name']}")
-		else:
-			print(f"Notification already exists: {notif['name']}")
+# 	for notif in notifications:
+# 		if not frappe.db.exists("Notification", notif["name"]):
+# 			notification = frappe.get_doc({
+# 				"doctype": "Notification",
+# 				**notif
+# 			})
+# 			notification.insert()
+# 			print(f"Created Notification: {notif['name']}")
+# 		else:
+# 			print(f"Notification already exists: {notif['name']}")
+
 
 def install_workflow():
 	"""Main installation function"""
@@ -314,8 +315,8 @@ def install_workflow():
 	print("\nStep 5: Creating Web Form...")
 	create_web_form()
 
-	print("\nStep 6: Creating Notifications...")
-	create_notifications()
+	# print("\nStep 6: Creating Notifications...")
+	# create_notifications()
 
 	frappe.db.commit()
 	print("\n=== Installation Complete! ===\n")
