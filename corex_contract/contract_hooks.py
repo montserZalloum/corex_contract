@@ -27,52 +27,55 @@ def on_contract_update(doc, method):
 			# 2. Apply the workflow action. This will trigger its own save.
 			apply_workflow(doc, "Sign Contract")
 
-			send_system_notification_to_managers(doc)
+			send_signature_notification(doc)
 			
 
-def send_system_notification_to_managers(doc):
+def send_signature_notification(doc):
 	"""
-	Sends a clickable system notification to all enabled users with the 'System Manager' role
-	by creating Notification Log documents for each of them.
+	Sends a clickable system notification to all enabled 'HR Managers' AND the document owner.
+	Uses a set to prevent sending duplicate notifications.
 	"""
-	# Direct SQL query to get users with the 'System Manager' role, bypassing permissions.
-	# This is necessary as the script is triggered by a 'Customer'.
-	system_managers = [
+	# 1. Get all users with the 'HR Manager' role
+	hr_managers = [
 		p[0] for p in frappe.db.sql("""
 			SELECT `parent`
 			FROM `tabHas Role`
-			WHERE `role`='System Manager'
+			WHERE `role`='HR Manager'
 			AND `parenttype`='User'
 			AND `parent` IN (SELECT `name` FROM `tabUser` WHERE `enabled`=1)
 		""")
 	]
 
-	if not system_managers:
+	# 2. Create a set from the list of HR Managers
+	# A set is a collection of unique items.
+	recipients = set(hr_managers)
+
+	# 3. Add the document owner to the set.
+	# If the owner is already in the set (i.e., they are an HR Manager),
+	# the set will not change, preventing duplicate notifications.
+	recipients.add(doc.owner)
+
+	# Check if we have anyone to notify
+	if not recipients:
 		frappe.log_error(
-			title="No System Managers Found",
-			message="Could not send Contract Signed notification because no enabled users with the 'System Manager' role were found."
+			title="No Recipients for Notification",
+			message=f"For Contract {doc.name}, no HR Managers were found and the owner could not be determined."
 		)
 		return
 
 	subject = f"Contract {doc.name} Signed"
 	message = f"The contract <strong>{doc.name}</strong> with <i>{doc.party_name}</i> has been signed and requires review."
 
-	# Loop through each manager and create a dedicated notification log for them.
-	# This is the correct and robust method to create a system notification.
-	for user in system_managers:
+	# 4. Loop through the final, unique list of recipients
+	for user in recipients:
 		notification_log = frappe.new_doc("Notification Log")
 		notification_log.for_user = user
 		notification_log.type = "Alert"
 		notification_log.from_user = doc.modified_by or frappe.session.user
 		notification_log.subject = subject
-		notification_log.email_content = message  # This content is shown in the notification pop-up
-
-		# This part makes the notification a clickable link to the contract
+		notification_log.email_content = message
 		notification_log.document_type = doc.doctype
 		notification_log.document_name = doc.name
-
-		# Insert the notification, ignoring permissions for the 'Customer' role.
 		notification_log.insert(ignore_permissions=True)
 	
-	# Commit the changes to the database to ensure notifications are saved immediately.
 	frappe.db.commit()

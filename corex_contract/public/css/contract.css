@@ -1,0 +1,3 @@
+#page-Contract .page-head .actions-btn-group li:has([data-label="Help"]){
+    display: none!important;
+}

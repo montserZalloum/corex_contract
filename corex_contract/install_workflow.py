@@ -65,7 +65,7 @@ def create_workflow_actions():
 		"Send for Signature",
 		"Sign Contract",
 		"Approve and Submit",
-		"Reject"
+		# "Reject"
 	]
 
 	for action in actions:
@@ -155,14 +155,14 @@ def create_workflow():
 				"allow_self_approval": 0,
 				"condition": "doc.party_signature and doc.signee_company"
 			},
-			{
-				"doctype": "Workflow Transition",
-				"state": "Signed by Party",
-				"action": "Reject",
-				"next_state": "Draft",
-				"allowed": "HR Manager",
-				"allow_self_approval": 1
-			}
+			# {
+			# 	"doctype": "Workflow Transition",
+			# 	"state": "Signed by Party",
+			# 	"action": "Reject",
+			# 	"next_state": "Draft",
+			# 	"allowed": "HR Manager",
+			# 	"allow_self_approval": 1
+			# }
 		]
 	})
 	workflow.insert()

@@ -85,7 +85,7 @@ fixtures = [
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/corex_contract/css/corex_contract.css"
+app_include_css = "/assets/corex_contract/css/contract.css"
 # app_include_js = "/assets/corex_contract/js/corex_contract.js"
 
 # include js, css files in header of web template
