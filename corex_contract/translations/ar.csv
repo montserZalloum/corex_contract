@@ -33,3 +33,20 @@ Source Text,Translated Text
 "Contract {0} - Party Signature Received","العقد {0} - تم استلام توقيع الطرف الآخر"
 "Contract {0} has been signed by {1}. Please review and approve.","تم توقيع العقد {0} بواسطة {1}. يرجى المراجعة والاعتماد."
 "View contract: {0}","عرض العقد: {0}"
+Sign Contract,توقيع العقد
+Party Name,اسم الطرف
+Contract Terms,شروط العقد
+Please read the contract terms carefully before signing,يرجى قراءة شروط العقد بعناية قبل التوقيع
+Start Date,تاريخ بداية العقد
+End Date,تاريخ انتهاء العقد
+Your Signature,توقيعك
+Signature,التوقيع
+Please sign in the box below,يرجى التوقيع في المربع أدناه
+Contract Signature,توقيع العقد
+View your response,عرض العقد
+Please review the contract terms below and provide your signature.,يرجى مراجعة شروط العقد أدناه وتقديم توقيعك.
+Contract Signed Successfully,تم توقيع العقد بنجاح
+Thank you for signing the contract. The company will review and finalize it.,شكراً لتوقيعك العقد. ستقوم الشركة بمراجعته وإتمامه.
+Submit Signature,إرسال التوقيع
+Your form has been successfully updated,تم توقيع العقد بنجاح
+"View your response","عرض العقد"
