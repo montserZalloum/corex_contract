@@ -13,19 +13,19 @@ frappe.ui.form.on('Contract', {
 		}
 
 		// Add button to send reminder email
-		if (frm.doc.workflow_state === 'Pending Party Signature' && frm.doc.party_user) {
-			frm.add_custom_button(__('Send Reminder'), function() {
-				frappe.call({
-					method: 'frappe.desk.doctype.notification.notification.send_notification',
-					args: {
-						doc: frm.doc
-					},
-					callback: function(r) {
-						frappe.msgprint(__('Reminder sent to ') + frm.doc.party_user);
-					}
-				});
-			});
-		}
+		// if (frm.doc.workflow_state === 'Pending Party Signature' && frm.doc.party_user) {
+		// 	frm.add_custom_button(__('Send Reminder'), function() {
+		// 		frappe.call({
+		// 			method: 'frappe.desk.doctype.notification.notification.send_notification',
+		// 			args: {
+		// 				doc: frm.doc
+		// 			},
+		// 			callback: function(r) {
+		// 				frappe.msgprint(__('Reminder sent to ') + frm.doc.party_user);
+		// 			}
+		// 		});
+		// 	});
+		// }
 
 		
 	}
