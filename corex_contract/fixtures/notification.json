@@ -11,7 +11,7 @@
      "enabled": 1,
      "event": "Value Change",
      "is_standard": 0,
-     "message": "{{ _('Dear {0},').format(doc.party_name) }}<br><br>{{ _('Please sign the contract by clicking: {0}').format(frappe.utils.get_url() + '/sign-contract/' + doc.name + '/edit') }}<br><br>{{ _('Contract Details:<br>- Number: {0}').format(doc.name) }}<br>{% if doc.start_date %}{{ _('- Start Date: {0}').format(doc.start_date) }}<br>{% endif %}{% if doc.end_date %}{{ _('- End Date: {0}').format(doc.end_date) }}<br>{% endif %}<br>{{ _('Thank you.') }}",
+     "message": "<div dir=\"{{ _('ltr') }}\">{{ _('Dear {0},').format(doc.party_name) }}<br><br>{{ _('Please sign the contract by clicking: {0}').format(frappe.utils.get_url() + '/sign-contract/' + doc.name + '/edit') }}<br><br>{{ _('Contract Details:') }}<br>{{ _('- Number: {0}').format(doc.name) }}<br>{% if doc.start_date %}{{ _('- Start Date: {0}').format(doc.start_date) }}<br>{% endif %}{% if doc.end_date %}{{ _('- End Date: {0}').format(doc.end_date) }}<br>{% endif %}<br>{{ _('Thank you.') }}</div>",
      "message_type": null,
      "method": null,
      "modified": "2025-12-09 19:51:22.573806",
