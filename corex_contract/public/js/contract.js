@@ -1,6 +1,5 @@
 frappe.ui.form.on('Contract', {
 	refresh: function(frm) {
-		frm.page.remove_action_item('Help');
 
 		// Add custom button to copy signature link
 		if (frm.doc.workflow_state === 'Pending Party Signature' && frm.doc.party_user) {
