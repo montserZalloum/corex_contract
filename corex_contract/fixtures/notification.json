@@ -52,7 +52,7 @@
      "enabled": 1,
      "event": "Value Change",
      "is_standard": 0,
-     "message": "{{ _('Contract {0} has been signed by {1}. Please review and approve.').format(doc.name, doc.party_name) }}\n\n{{ _('View contract: {0}').format(frappe.utils.get_url() + '/app/contract/' + doc.name) }}",
+     "message": "<div dir=\"{{ _('ltr') }}\">{{ _('Contract {0} has been signed by {1}. Please review and approve.').format(doc.name, doc.party_name) }}<br><br>{{ _('View contract: {0}').format(frappe.utils.get_url() + '/app/contract/' + doc.name) }}</div>",
      "message_type": null,
      "method": null,
      "modified": "2025-12-09 19:51:22.595144",

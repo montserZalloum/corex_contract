@@ -36,7 +36,7 @@
   "show_attachments": 0,
   "show_list": 0,
   "show_sidebar": 0,
-  "success_message": "Thank you for signing the contract. The company will review and finalize it.",
+  "success_message": "Thank you for signing the contract. we will review and finalize it.",
   "success_title": "Contract Signed Successfully",
   "success_url": null,
   "title": "Sign Contract",

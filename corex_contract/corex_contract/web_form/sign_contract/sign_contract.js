@@ -6,7 +6,7 @@ frappe.ready(function() {
         setTimeout(function() {
             // 1. Define your translated strings
             var success_title = __("Contract Signed Successfully");
-            var success_msg = __("Thank you for signing the contract. The company will review and finalize it.");
+            var success_msg = __("Thank you for signing the contract. we will review and finalize it.");
             var view_btn = __("View your response");
 
             // 2. Inject them into the existing HTML structure

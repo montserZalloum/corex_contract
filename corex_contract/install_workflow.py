@@ -197,7 +197,7 @@ def create_web_form():
 		"show_sidebar": 0,
 		"button_label": "Submit Signature",
 		"success_title": "Contract Signed Successfully",
-		"success_message": "Thank you for signing the contract. The company will review and finalize it.",
+		"success_message": "Thank you for signing the contract. we will review and finalize it.",
 		"introduction_text": "<h3>Contract Signature</h3><p>Please review the contract terms below and provide your signature.</p>",
 		"condition_json": '[[\"Contract\",\"workflow_state\",\"=\",\"Pending Party Signature\",false]]',
 		"web_form_fields": [

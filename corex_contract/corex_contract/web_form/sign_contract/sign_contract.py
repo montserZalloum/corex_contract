@@ -13,7 +13,7 @@ def get_context(context):
 
     # 2. Translate Success Message and Title
     context.success_title = _("Contract Signed Successfully")
-    context.success_message = _("Thank you for signing the contract. The company will review and finalize it.")
+    context.success_message = _("Thank you for signing the contract. we will review and finalize it.")
     
     # 3. Translate Button Label
     context.button_label = _("Submit Signature")
